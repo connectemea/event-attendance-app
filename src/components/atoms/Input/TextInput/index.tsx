@@ -1,5 +1,10 @@
-export const TextInput = () => {
+import React, { FC } from 'react';
+import TextField, { TextFieldProps } from '@mui/material/TextField';
+
+type TextInputProps = Omit<TextFieldProps, 'variant'> & {}
+
+export const TextInput: FC<TextInputProps> = (props) => {
     return (
-        <div></div>
+        <TextField fullWidth  label="Outlined" variant="outlined" />
     )
 }
