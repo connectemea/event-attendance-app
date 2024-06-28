@@ -1,0 +1,163 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("MONGODB_URI")
+}
+
+// User model
+model user {
+  id               String             @id @default(auto()) @map("_id") @db.ObjectId
+  name             String
+  email            String
+  password         String
+  phone_number     String?
+  role             role?              @relation(fields: [role_id], references: [id])
+  status           user_status?       @relation(fields: [status_id], references: [id])
+  club             club?              @relation(fields: [club_id], references: [id])
+  student_id       String?            @db.ObjectId
+  role_id          String?            @db.ObjectId
+  status_id        String?            @db.ObjectId
+  club_id          String?            @db.ObjectId
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  club_coordinator club_coordinator[]
+  event            event[]
+  event_attendance event_attendance[]
+  user_request     user_request[]
+  request_remark   request_remark[]
+  student          student?
+
+  @@index([email], name: "unique_email") // Ensure email is unique
+}
+
+// Student model
+model student {
+  admission_no  String      @id @map("_id")
+  user          user        @relation(fields: [user_id], references: [id])
+  user_id       String      @unique @db.ObjectId
+  name          String
+  roll_no       String
+  department    department  @relation(fields: [department_id], references: [id])
+  department_id String      @db.ObjectId
+  course_type   course_type @relation(fields: [course_id], references: [id])
+  course_id     String      @db.ObjectId
+  joining_year  Int
+  is_active     Boolean
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@index([admission_no], name: "unique_admission_no") // Ensure admission_no is unique
+}
+
+// Club Coordinator model
+model club_coordinator {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  club      club     @relation(fields: [club_id], references: [id])
+  user      user     @relation(fields: [user_id], references: [id])
+  club_id   String   @db.ObjectId
+  user_id   String   @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([club_id, user_id], name: "unique_club_user")
+}
+
+// Club model
+model club {
+  id               String             @id @default(auto()) @map("_id") @db.ObjectId
+  club_name        String
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  user             user[]
+  club_coordinator club_coordinator[]
+}
+
+// Event model
+model event {
+  id               String             @id @default(auto()) @map("_id") @db.ObjectId
+  title            String
+  organizer        user               @relation(fields: [user_id], references: [id])
+  event_date       DateTime
+  description      String
+  user_id          String             @db.ObjectId
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  event_attendance event_attendance[]
+}
+
+// Event Attendance model
+model event_attendance {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  event       event    @relation(fields: [event_id], references: [id])
+  attendee    user     @relation(fields: [attendee_id], references: [id])
+  event_id    String   @db.ObjectId
+  attendee_id String   @db.ObjectId
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([event_id, attendee_id], name: "unique_event_attendance")
+}
+
+// User Request model
+model user_request {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  user        user     @relation(fields: [user_id], references: [id])
+  user_id     String   @db.ObjectId
+  is_approved Boolean
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([user_id], name: "unique_user_request")
+}
+
+// Request Remark model
+model request_remark {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  user      user     @relation(fields: [user_id], references: [id])
+  user_id   String   @db.ObjectId
+  details   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([user_id], name: "unique_request_remark")
+}
+
+// Department model
+model department {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  student   student[]
+}
+
+// Role model
+model role {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  rank      Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      user[]
+}
+
+// Course Type model
+model course_type {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  student   student[]
+}
+
+// User Status model
+model user_status {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      user[]
+}
