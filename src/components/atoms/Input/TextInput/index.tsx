@@ -5,6 +5,6 @@ type TextInputProps = Omit<TextFieldProps, 'variant'> & {}
 
 export const TextInput: FC<TextInputProps> = (props) => {
     return (
-        <TextField fullWidth  label="Outlined" variant="outlined" />
+        <TextField fullWidth  label="Outlined" variant="outlined"  />
     )
 }

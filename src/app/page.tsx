@@ -1,3 +1,6 @@
+import React from "react"
+import { TextInput } from "../components/atoms/Input/TextInput";
+import { SelectInput } from "@/components/atoms/Input/SelectInput";
 
 export default function Home() {
   return (
@@ -5,6 +8,7 @@ export default function Home() {
       <h1>
         Welcome to home page
       </h1>
+      <TextInput  />
     </main>
   );
 }
