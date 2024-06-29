@@ -1,0 +1,134 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+// model Topic {
+//   id        String   @id @default(auto()) @map("_id") @db.ObjectId
+//   title     String
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+// }
+
+model user {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  email        String
+  phone_number String
+  role_id      String
+  status_id    String
+  club_id      String
+  student_id   String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model club_coordinator {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  club_id   String
+  user_id   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([club_id, user_id], name: "unique_club_user")
+}
+
+model club {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  club_name String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model event {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  user_id     String
+  event_date  DateTime
+  description String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model event_attendance {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  event_id    String
+  attendee_id String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([event_id, attendee_id], name: "unique_event_attendance")
+}
+
+model student {
+  admission_no  String   @id @map("_id")
+  user_id       String   @unique
+  name          String
+  roll_no       String
+  department_id String
+  course_id     String
+  joining_year  Int
+  is_active     Boolean
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([department_id, course_id], name: "unique_student")
+}
+
+model user_request {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  user_id     String
+  is_approved Boolean
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([user_id], name: "unique_user_request")
+}
+
+model request_remark {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  user_id   String
+  details   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([user_id], name: "unique_request_remark")
+}
+
+model department {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model role {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  rank      Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model course_type {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model user_status {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
