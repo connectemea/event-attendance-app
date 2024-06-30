@@ -1,36 +1,35 @@
-// api/role/[id]/route.ts
+// api/club/[id]/route.ts
 
-import { getSingleRole, updateRole, deleteRole } from '../../controllers/roleController';
-
+import { getSingleClub, updateClub, deleteClub } from '../../controllers/clubController';
 import { NextResponse } from 'next/server';
 
 type Params = {
     id: string
 }
 
-// GET single Role
+// GET single club
 export async function GET(request: Request, context: { params: Params }) {
     const id = context.params.id;
     if (!id) {
         return NextResponse.json({ message: "Invalid ID" }, { status: 400 })
     }
-    return getSingleRole(id);
+    return getSingleClub(id);
 }
 
-// DELETE Role
+// DELETE club
 export async function DELETE(request: Request, context: { params: Params }) {
     const id = context.params.id;
     if (!id) {
         return NextResponse.json({ message: "Invalid ID" }, { status: 400 })
     }
-    return deleteRole(id);
+    return deleteClub(id);
 }
 
-// Update Role
+// Update club
 export async function PUT(request: Request, context: { params: Params }) {
     const id = context.params.id;
     if (!id) {
         return NextResponse.json({ message: "Invalid ID" }, { status: 400 })
     }
-    return updateRole(request, id);
+    return updateClub(request, id);
 }

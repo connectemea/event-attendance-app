@@ -9,45 +9,44 @@ datasource db {
 
 // User model
 model user {
-  id               String             @id @default(auto()) @map("_id") @db.ObjectId
-  name             String
-  email            String
-  password         String
-  phone_number     String?
-  role             role?              @relation(fields: [role_id], references: [id])
-  status           user_status?       @relation(fields: [status_id], references: [id])
-  club             club?              @relation(fields: [club_id], references: [id])
-  student_id       String?            @db.ObjectId
-  role_id          String?            @db.ObjectId
-  status_id        String?            @db.ObjectId
-  club_id          String?            @db.ObjectId
-  createdAt        DateTime           @default(now())
-  updatedAt        DateTime           @updatedAt
-  club_coordinator club_coordinator[]
-  event            event[]
-  event_attendance event_attendance[]
-  user_request     user_request[]
-  request_remark   request_remark[]
-  student          student?
+  id                  String             @id @default(auto()) @map("_id") @db.ObjectId
+  name                String
+  email               String
+  password            String
+  phone_number        String?
+  role                role?              @relation(fields: [role_id], references: [id])
+  status              user_status?       @relation(fields: [status_id], references: [id])
+  club                club?              @relation(fields: [club_id], references: [id])
+  role_id             String?            @db.ObjectId
+  status_id           String?            @db.ObjectId
+  club_id             String?            @db.ObjectId
+  createdAt           DateTime           @default(now())
+  updatedAt           DateTime           @updatedAt
+  club_coordinator    club_coordinator[]
+  event               event[]
+  user_request        user_request[]
+  request_remark      request_remark[]
+  student             student?
 
   @@index([email], name: "unique_email") // Ensure email is unique
 }
 
 // Student model
 model student {
-  admission_no  String      @id @map("_id")
-  user          user        @relation(fields: [user_id], references: [id])
-  user_id       String      @unique @db.ObjectId
-  name          String
-  roll_no       String
-  department    department  @relation(fields: [department_id], references: [id])
-  department_id String      @db.ObjectId
-  course_type   course_type @relation(fields: [course_id], references: [id])
-  course_id     String      @db.ObjectId
-  joining_year  Int
-  is_active     Boolean
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
+  admission_no     String             @id @map("_id")
+  user             user               @relation(fields: [user_id], references: [id])
+  user_id          String             @unique @db.ObjectId
+  name             String
+  roll_no          String
+  department       department         @relation(fields: [department_id], references: [id])
+  department_id    String             @db.ObjectId
+  course_type      course_type        @relation(fields: [course_id], references: [id])
+  course_id        String             @db.ObjectId
+  joining_year     Int
+  is_active        Boolean
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  event_attendance event_attendance[]
 
   @@index([admission_no], name: "unique_admission_no") // Ensure admission_no is unique
 }
@@ -55,6 +54,7 @@ model student {
 // Club Coordinator model
 model club_coordinator {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
   club      club     @relation(fields: [club_id], references: [id])
   user      user     @relation(fields: [user_id], references: [id])
   club_id   String   @db.ObjectId
@@ -71,8 +71,8 @@ model club {
   club_name        String
   createdAt        DateTime           @default(now())
   updatedAt        DateTime           @updatedAt
-  user             user[]
   club_coordinator club_coordinator[]
+  user             user[]
 }
 
 // Event model
@@ -92,9 +92,9 @@ model event {
 model event_attendance {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   event       event    @relation(fields: [event_id], references: [id])
-  attendee    user     @relation(fields: [attendee_id], references: [id])
+  attendee    student  @relation(fields: [attendee_id], references: [admission_no])
   event_id    String   @db.ObjectId
-  attendee_id String   @db.ObjectId
+  attendee_id String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
