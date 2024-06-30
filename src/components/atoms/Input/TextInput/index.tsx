@@ -1,29 +1,16 @@
-// components/atoms/TextInput.tsx
 import React from "react";
+import { TextField, TextFieldProps, TextFieldVariants } from "@mui/material";
 
-interface TextInputProps {
-  type: string;
-  placeholder?: string;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}
+type TextInputProps = Omit<TextFieldProps, "variant"> & {};
 
-const TextInput: React.FC<TextInputProps> = ({
-  type,
-  placeholder,
-  value,
-  onChange,
-}) => {
-  return (
-    <div>
-      <input
-        type={type}
-        placeholder={placeholder}
-        value={value}
-        onChange={onChange}
-      />
-    </div>
-  );
+const DEFAULT_VALUE = {
+  SIZE: "smalll" as TextFieldProps["size"],
+  VARIANT: "outlined" as TextFieldVariants
 };
 
-export default TextInput;
+export const TextInput: React.FC<TextInputProps> = ({
+  size = DEFAULT_VALUE.SIZE,
+  ...props
+}) => {
+  return <TextField variant={DEFAULT_VALUE.VARIANT} {...props} />;
+};

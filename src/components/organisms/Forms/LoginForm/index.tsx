@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import TextInput from "@/components/atoms/Input/TextInput";
+import { TextInput } from "@/components/atoms/Input/TextInput";
 import SubmitButton from "@/components/atoms/Button/SubmitButton";
 import ErrorMessage from "@/components/atoms/ErrorMessage";
 import Link from "next/link";
@@ -31,7 +31,7 @@ const LoginForm: React.FC = () => {
       const res = await signIn("credentials", {
         email,
         password,
-        redirect: false,
+        redirect: false
       });
       if (res?.error) {
         setError("Invalid credentials");
