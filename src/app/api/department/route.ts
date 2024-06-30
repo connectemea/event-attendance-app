@@ -3,14 +3,12 @@ import { getDepartment, createDepartment } from '../controllers/departmentContro
 import { NextRequest } from "next/server";
 
 
-// GET all events
+// GET all departments
 export async function GET() {
     return getDepartment();
 }
 
-// Create new event
+// Create new department
 export async function POST(request: NextRequest) {
     return createDepartment(request);
 }
-
-

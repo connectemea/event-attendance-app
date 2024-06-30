@@ -1,4 +1,4 @@
-// api/events/[id]/route.ts
+// api/department/[id]/route.ts
 
 import { getSingleDepartment, updateDepartment, deleteDepartment } from '../../controllers/departmentController';
 import { NextResponse } from 'next/server';
