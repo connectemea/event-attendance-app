@@ -3,26 +3,20 @@ import React, { useState } from "react";
 import { TextInput } from "@/components/atoms/Input/TextInput";
 import SubmitButton from "@/components/atoms/Button/SubmitButton";
 import ErrorMessage from "@/components/atoms/ErrorMessage";
-import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import Snackbar, { SnackbarOrigin } from "@mui/material/Snackbar";
+import { SelectInput } from "@/components/atoms/Input/SelectInput";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
 
-const LoginForm: React.FC = () => {
+const AdminLoginForm: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("user");
+  const [selectedRole, setSelectedRole] = useState("admin");
   const [error, setError] = useState("");
-  const [snackbarState, setSnackbarState] = useState<{
-    open: boolean;
-    vertical: SnackbarOrigin["vertical"];
-    horizontal: SnackbarOrigin["horizontal"];
-  }>({
-    open: false,
-    vertical: "top",
-    horizontal: "center",
-  });
   const router = useRouter();
+
+  // Handle input changes
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -32,84 +26,103 @@ const LoginForm: React.FC = () => {
     setPassword(e.target.value);
   };
 
-  const handleCloseSnackbar = () => {
-    setSnackbarState({ ...snackbarState, open: false });
+  const handleRoleChange = (e: SelectChangeEvent) => {
+    setSelectedRole(e.target.value as string);
   };
 
+  const options = [
+    { value: "admin", label: "Admin" },
+    { value: "moderator", label: "Moderator" },
+  ];
+
+  // handle form submission
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!email || !password) {
       setError("All fields are required");
-      return;
     }
 
     try {
       const res = await signIn("credentials", {
         email,
         password,
-        role,
+        role: selectedRole,
         redirect: false,
       });
-
       if (res?.error) {
         setError("Invalid credentials");
         return;
       }
-
-      setSnackbarState({ ...snackbarState, open: true });
-      setTimeout(() => {
-        // Redirect to home page after successful login
-        router.push("/");
-      }, 2000);
+      router.push("/adminPanel");
     } catch (error) {
-      console.error("Login error:", error);
-      setError("Failed to login");
+      console.error(error);
     }
   };
+
+  // Fill the form for testing
   const handleClick = () => {
-    setEmail("demo@gmail.com");
+    setEmail("admin@gmail.com");
     setPassword("password");
+    setSelectedRole("admin");
   };
+
   return (
     <div className="shadow-lg p-5 rounded-lg border-t-4 border-green-400">
-      <div className="flex items-center">
-        <button onClick={() => handleClick()} className="bg-blue-500 p-2 rounded-md font-bold text-white mx-auto ">Click to fill</button>
+      <h1 className="text-xl font-bold my-4 text-black text-center">
+        Admin Login
+      </h1>
+      <div className="flex items-center p-2">
+        <button
+          onClick={() => handleClick()}
+          className="bg-blue-500 p-2 rounded-md font-bold text-white mx-auto "
+        >
+          Click to fill
+        </button>
       </div>
-      <h1 className="text-xl font-bold my-4 text-black">Enter the details</h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <TextInput
           type="email"
-          placeholder="Email"
+          label="Email"
           value={email}
           onChange={handleEmailChange}
         />
         <TextInput
           type="password"
-          placeholder="Password"
+          label="Password"
           value={password}
           onChange={handlePasswordChange}
         />
+        {/* onChange issue facing */}
+        {/* <SelectInput
+          label="Role"
+          value={selectedRole}
+          option={options}
+          onChange={handleRoleChange}
+        /> */}
+
+        <Select
+          labelId="demo-select-small-label"
+          id="demo-select-small"
+          value={selectedRole}
+          label="Role"
+          onChange={handleRoleChange}
+        >
+          {options.map((item) => (
+            <MenuItem key={item.value} value={item.value}>
+              {item.label}
+            </MenuItem>
+          ))}
+        </Select>
         <SubmitButton
           onClick={() => console.log("Button clicked")}
-          disabled={!email || !password}
+          disabled={false}
         >
           Login
         </SubmitButton>
         {error && <ErrorMessage message={error} />}
-
-        <Link href="/register" className="text-sm mt-3 text-right">
-          Don't have an account? <span className="underline">Register</span>
-        </Link>
       </form>
-      <Snackbar
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        open={snackbarState.open}
-        onClose={handleCloseSnackbar}
-        message="Login successful!"
-        key={`${snackbarState.vertical},${snackbarState.horizontal}`}
-      />
     </div>
   );
 };
 
-export default LoginForm;
+export default AdminLoginForm;

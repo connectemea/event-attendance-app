@@ -2,14 +2,18 @@
 import LogOutButton from "@/components/atoms/Button/LogOut";
 import { signOut } from "next-auth/react";
 import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 
-export default function Dashboard() {
+export default function Home() {
   const { data: session } = useSession();
 
+  const handleSignout = async () => {
+    await signOut();
+  }
   return (
     <main className="grid place-items-center h-screen bg-white ">
       <div className="flex items-center justify-center gap-4 flex-col">
-        <h1 className="text-black font-semibold">Welcome to dashboard</h1>
+        <h1 className="text-black font-semibold">Welcome to user panel</h1>
         <div className="flex items-start justify-center gap-4 flex-col shadow-lg p-5 rounded-lg border-t-4 border-green-400">
           <div>
             Name :
@@ -24,9 +28,12 @@ export default function Dashboard() {
             </span>
           </div>
           <div>
-            Role : <span className="text-black font-semibold">Testing</span>
+            Role :{" "}
+            <span className="text-black font-semibold">
+              {session?.user?.role}
+            </span>
           </div>
-          <LogOutButton onClick={() => signOut()}>Logout</LogOutButton>
+          <LogOutButton onClick={() => handleSignout()}>Logout</LogOutButton>
         </div>
       </div>
     </main>
