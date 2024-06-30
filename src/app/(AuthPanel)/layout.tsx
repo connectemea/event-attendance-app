@@ -7,7 +7,7 @@ import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
-import { AuthProvider } from "./Providers";
+import { AuthProvider } from "../Providers";
 
 export const metadata: Metadata = {
   title: "Attendance App",
@@ -25,6 +25,7 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <body>
+        <h1 className="text-center font-bold text-lg">Auth Panel</h1>
         <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
