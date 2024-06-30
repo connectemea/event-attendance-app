@@ -1,4 +1,4 @@
-import prisma from '@/src/libs/prisma';
+import prisma from '@/libs/prisma';
 import { NextResponse } from "next/server";
 
 //  GET all Department

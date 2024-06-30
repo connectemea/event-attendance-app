@@ -1,10 +1,29 @@
-import React, { FC } from 'react';
-import TextField, { TextFieldProps } from '@mui/material/TextField';
+// components/atoms/TextInput.tsx
+import React from "react";
 
-type TextInputProps = Omit<TextFieldProps, 'variant'> & {}
-
-export const TextInput: FC<TextInputProps> = (props) => {
-    return (
-        <TextField fullWidth  label="Outlined" variant="outlined" />
-    )
+interface TextInputProps {
+  type: string;
+  placeholder?: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
+
+const TextInput: React.FC<TextInputProps> = ({
+  type,
+  placeholder,
+  value,
+  onChange,
+}) => {
+  return (
+    <div>
+      <input
+        type={type}
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+      />
+    </div>
+  );
+};
+
+export default TextInput;

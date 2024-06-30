@@ -1,4 +1,4 @@
-import prisma from '@/src/libs/prisma';
+import prisma from '@/libs/prisma';
 import { NextResponse } from "next/server";
 
 //  GET all students
@@ -29,6 +29,7 @@ export async function createStudent(request: Request) {
         });
         return NextResponse.json({ message: "New student created successfully", newStudent }, { status: 201 })
     } catch (error) {
+        console.log(error);
         return NextResponse.json({ message: "Internal Server Error" }, { status: 500 })
     }
 }

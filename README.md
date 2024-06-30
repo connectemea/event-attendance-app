@@ -1,36 +1,78 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Event Attendance App
 
-## Getting Started
+## Description
+This is a comprehensive event attendance collection app designed for college clubs. The app allows college clubs to request accounts, which are then verified by an admin. Once verified, club coordinators can access their accounts to create events, record student attendance, and export attendance data in both PDF and Excel formats. The project is currently in the development stage and aims to streamline the management and tracking of event attendance for college clubs.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Admin Features
+- **Admin Verification:** Admins can verify and approve club account requests.
+- **User Management:** Create, edit, disable, and list users.
+- **Student Management:** Create, edit, delete, and list students. Upload student data via Excel sheets.
+- **Event Management:** Create, edit, delete, and list events. Approve or reject event attendance sheets.
+- **User Request Management:** View and manage user registration requests.
+- **Export Data:** Export attendance data to PDF and Excel formats.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Club Coordinator Features
+- **Account Management:** Register and log in to the app. Request account approval or reverse registration requests.
+- **Event Creation:** Create, edit, and delete events.
+- **Attendance Recording:** Add student attendance to events. Scan student ID cards for quick attendance recording.
+- **Export Attendance:** Export attendance data to PDF and Excel formats.
+- **Profile Management:** View and update profile details, including changing passwords.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Front-End
+- **Framework:** Next.js
+- **UI Library:** Material UI
 
-## Learn More
+### Back-End
+- **Framework:** NestJS
+- **ORM:** Prisma
+- **Database:** MongoDB
 
-To learn more about Next.js, take a look at the following resources:
+## Installation
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Prerequisites
+- Node.js and npm installed on your machine
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### Steps
+1. Clone the repository:
+    ```sh
+    git clone https://github.com/connectemea/event-attendance-register.git
+    ```
+2. Navigate to the project directory:
+    ```sh
+    cd event-attendance-register
+    ```
+3. Install the required dependencies:
+    ```sh
+    npm install
+    ```
+4. Set up environment variables. Create a `.env` file in the root directory and add the following:
+    ```sh
+    MONGODB_URI=your_mongodb_connection_string
+    NEXTAUTH_SECRET=your_nextauth_secret
+    NEXTAUTH_URL=your_nextauth_url
+    ```
+5. Generate Prisma client:
+    ```sh
+    npx prisma generate --schema=./src/prisma/schema.prisma
+    ```
+6. Start Prisma Studio (optional):
+    ```sh
+    npx prisma studio --schema=./src/prisma/schema.prisma
+    ```
+7. Open your web browser and navigate to `http://localhost:5555`.
+### Usage
+1. Start the development server:
+    ```sh
+    npm run dev
+    ```
+2. Open your web browser and navigate to `http://localhost:3000`.
 
-## Deploy on Vercel
+### Contributing
+Contributions are welcome! If you find any bugs or have suggestions for improvements, please open an issue or submit a pull request.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### License
+This project is licensed under the [MIT License](LICENSE).

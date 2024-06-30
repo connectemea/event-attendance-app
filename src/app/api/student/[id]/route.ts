@@ -1,4 +1,4 @@
-// api/events/[id]/route.ts
+// api/student/[id]/route.ts
 
 import { getSingleStudent, updateStudent, deleteStudent } from '../../controllers/studentController';
 import { NextResponse } from 'next/server';
@@ -7,7 +7,7 @@ type Params = {
     id: string
 }
 
-// GET single event
+// GET single student
 export async function GET(request: Request, context: { params: Params }) {
     const id = context.params.id;
     if (!id) {
@@ -16,7 +16,7 @@ export async function GET(request: Request, context: { params: Params }) {
     return getSingleStudent(id);
 }
 
-// DELETE event
+// DELETE student
 export async function DELETE(request: Request, context: { params: Params }) {
     const id = context.params.id;
     if (!id) {
@@ -25,7 +25,7 @@ export async function DELETE(request: Request, context: { params: Params }) {
     return deleteStudent(id);
 }
 
-// Update event
+// Update student
 export async function PUT(request: Request, context: { params: Params }) {
     const id = context.params.id;
     if (!id) {
