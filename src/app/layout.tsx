@@ -8,6 +8,8 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import { AuthProvider } from "./Providers";
+import { ThemeProvider } from "@emotion/react";
+import { darkTheme } from "@/theme";
 
 export const metadata: Metadata = {
   title: "Attendance App",
@@ -25,7 +27,10 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <body>
+      <ThemeProvider theme={darkTheme}>
+        
         <AuthProvider>{children}</AuthProvider>
+      </ThemeProvider> 
       </body>
     </html>
   );

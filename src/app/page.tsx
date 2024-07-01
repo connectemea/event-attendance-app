@@ -5,6 +5,7 @@ import LoginForm from "@/components/organisms/Forms/LoginForm";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { authOptions } from "./api/auth/[...nextauth]/route";
+import BasicTable from "@/components/atoms/Table/demo";
 
 export default async function Home() {
   const session = await getServerSession(authOptions);
@@ -29,6 +30,7 @@ export default async function Home() {
           ]}
         />
       </div>
+      <BasicTable />
     </main>
   );
 }
