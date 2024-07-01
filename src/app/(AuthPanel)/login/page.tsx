@@ -4,13 +4,13 @@ import { SelectInput } from "@/components/atoms/Input/SelectInput";
 import LoginForm from "@/components/organisms/Forms/LoginForm";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import { authOptions } from "./api/auth/[...nextauth]/route";
-import BasicTable from "@/components/atoms/Table/demo";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export default async function Home() {
   const session = await getServerSession(authOptions);
+  console.log("Session", session);
   if (session) {
-    redirect("/dashboard");
+    redirect("/");
   }
 
   return (
@@ -23,14 +23,14 @@ export default async function Home() {
       <div className="flex flex-col gap-4">
         <TextInput label="label" />
         <SelectInput
+          value=""
           label="Select"
           option={[
             { label: "test", value: "test" },
-            { label: "test2", value: "test2" }
+            { label: "test2", value: "test2" },
           ]}
         />
       </div>
-      <BasicTable />
     </main>
   );
 }

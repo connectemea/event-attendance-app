@@ -1,16 +1,16 @@
 // import type { NextApiRequest, NextApiResponse } from 'next'
-import { getCourses, createCourse } from '../controllers/courseController';
+import { getStatus, createStatus } from '../controllers/statusController';
 import { NextRequest } from "next/server";
 
 
-// GET all courses
+// GET all Status
 export async function GET() {
-    return getCourses();
+    return getStatus();
 }
 
-// Create new course
+// Create new Status
 export async function POST(request: NextRequest) {
-    return createCourse(request);
+    return createStatus(request);
 }
 
 
