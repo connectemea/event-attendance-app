@@ -24,7 +24,7 @@ export default function RootLayout({
       <Head>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <body>
+      <body className="m-3 md:mx-20">
           <h1 className="text-center font-bold text-lg">User Panel</h1>
           <AuthProvider>{children}</AuthProvider>
       </body>
