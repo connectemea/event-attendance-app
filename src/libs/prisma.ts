@@ -19,10 +19,11 @@ if (process.env.NODE_ENV === 'production') {
 const initializePrisma = async () => {
   try {
     await prisma.$connect();
-    console.log('Connected to the database!');
+    console.log('\nConnected to the database!\n');
   } catch (error) {
-    console.error('Error connecting to the database!');
+    console.error('Error connecting to the database!\n');
     console.error(error);
+    console.error('End of Database error\n');
   }
 };
 
