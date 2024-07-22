@@ -5,7 +5,6 @@ import SubmitButton from "@/components/atoms/Button/SubmitButton";
 import ErrorMessage from "@/components/atoms/ErrorMessage";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { SelectInput } from "@/components/atoms/Input/SelectInput";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 

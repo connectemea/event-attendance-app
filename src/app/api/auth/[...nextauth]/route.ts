@@ -10,6 +10,7 @@ interface CustomUser {
     status: string;
     role: string;
 }
+interface Credentials { email: string, password: string, role: string }
 
 
 export const authOptions: NextAuthOptions = {
@@ -18,17 +19,14 @@ export const authOptions: NextAuthOptions = {
             name: "credentials",
             credentials: {},
             async authorize(credentials): Promise<any> {
-                const { email, password, role } = credentials as { email: string, password: string, role: string };
+                const { email, password, role } = credentials as Credentials;
 
                 if (!email || !password) return null;
                 try {
-                    // find user by email
                     const user = await prisma.user.findFirst({ where: { email } });
-                    // if user does not exist
                     if (!user) return null;
 
                     const passwordMatch = await bcrypt.compare(password, user.password);
-                    // console.log("Password match", passwordMatch);
 
                     // if password does not match
                     if (!passwordMatch) return null;
