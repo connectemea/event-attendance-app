@@ -1,5 +1,5 @@
-import { LoginAdminTemplate } from "@/components/templates/admin/LoginAdminTemplate";
+import { AdminLoginPage } from "@/components/page/admin/AdminLoginPage";
 
-export default function Login() {
-  return <LoginAdminTemplate />;
+export default function AdminLogin() {
+  return <AdminLoginPage />;
 }
